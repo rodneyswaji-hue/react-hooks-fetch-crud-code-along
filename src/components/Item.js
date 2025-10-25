@@ -1,16 +1,18 @@
-import React from "react";
-
-function Item({ item }) {
-  return (
-    <li className={item.isInCart ? "in-cart" : ""}>
-      <span>{item.name}</span>
-      <span className="category">{item.category}</span>
-      <button className={item.isInCart ? "remove" : "add"}>
-        {item.isInCart ? "Remove From" : "Add to"} Cart
-      </button>
-      <button className="remove">Delete</button>
-    </li>
-  );
+function handleToggleCart() {
+  fetch(`/items/${id}`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ isInCart: !isInCart }),
+  })
+    .then((r) => r.json())
+    .then((updatedItem) => onUpdateItem(updatedItem));
 }
 
-export default Item;
+function handleDelete() {
+  fetch(`/items/${id}`, {
+    method: "DELETE",
+  }).then(() => onDeleteItem(item));
+}
+
+
+
